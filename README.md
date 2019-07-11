@@ -14,16 +14,24 @@ TVOffAnimation ：电视机关闭动画效果
 
 （三）网络：
 1： okhttp封装 
- 使用：okhttp.getInstance...
 2:  retrofit2 +Rxjava +OkHttp3 封装
-使用 ：
- 	HttpCommInterceptor.Builder httpCommInterceptor = new HttpCommInterceptor.Builder()
-                .addQueryParam("key", ApiConfig.API_KEY);
-        Map<Integer, Interceptor> interceptorMap = new HashMap<>();
-        interceptorMap.put(1, httpCommInterceptor.build());
-        lotteryService = RetrofitServiceManager
-                .getInstance(ApiConfig.HOST, interceptorMap)
-                .create(LotteryService.class);
+
+（四）系统相关工具
+MacUtils 获取相关信息
+
+（五）工具：
+BitmapUtils  图片辅助工具
+CrashHadle   全局异常捕捉工具
+ExcptionUtils 网络相关异常处理工具
+InputMethodUtil 键盘输入相关工具
+SPUtils   SP存储工具类
+StatusBarUtil     状态栏相关工具
+ToastUtils    吐司相关工具
+ValidateUtils   输入校验工具类
+
+（六）自定义控件
+
+
 
 
 #### 安装教程
