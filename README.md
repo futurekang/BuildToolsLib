@@ -15,7 +15,7 @@ TVOffAnimation ：电视机关闭动画效果
 （三）网络：
 1： okhttp封装 
  使用：okhttp.getInstance...
-/n2:  retrofit2 +Rxjava +OkHttp3 封装
+2:  retrofit2 +Rxjava +OkHttp3 封装
 使用 ：
  	HttpCommInterceptor.Builder httpCommInterceptor = new HttpCommInterceptor.Builder()
                 .addQueryParam("key", ApiConfig.API_KEY);
