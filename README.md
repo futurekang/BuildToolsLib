@@ -23,7 +23,7 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 
 	dependencies {
-	        implementation 'com.github.futurekang:BuildToolsLib:Tag'
+	        implementation 'com.github.futurekang:BuildToolsLib:alpha-1.0'
 	}
  
 
