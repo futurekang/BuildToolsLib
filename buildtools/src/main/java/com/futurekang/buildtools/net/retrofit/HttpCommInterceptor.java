@@ -7,6 +7,7 @@ import java.util.Map;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
@@ -21,6 +22,7 @@ public class HttpCommInterceptor implements Interceptor {
         Request oldRequest = chain.request();
         //构建新的请求，代替原来的请求
         Request.Builder requestBuilder = oldRequest.newBuilder();
+
         requestBuilder.method(oldRequest.method(), oldRequest.body());
 
         HttpUrl.Builder authorizedUrlBuilder = oldRequest.url().newBuilder();
