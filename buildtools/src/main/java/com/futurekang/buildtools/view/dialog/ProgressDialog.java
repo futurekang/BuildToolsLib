@@ -2,7 +2,9 @@ package com.futurekang.buildtools.view.dialog;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.LinearLayout;
 
+import com.futurekang.buildtools.util.Utils;
 import com.futurekang.buildtools.view.ProgressBar;
 
 public class ProgressDialog extends BaseDialog {
@@ -35,12 +37,10 @@ public class ProgressDialog extends BaseDialog {
 
 
     public void setProgress(int progress) {
-        progressBar.setStyle(ProgressBar.Style.ARC_TEXT);
         progressBar.setProgress(progress);
     }
 
     public void setMax(int max) {
-        progressBar.setStyle(ProgressBar.Style.ARC_TEXT);
         progressBar.setMax(max);
         progressBar.postInvalidate();
     }

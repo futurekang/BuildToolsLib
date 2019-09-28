@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ImageFormat;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -22,6 +23,8 @@ import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import androidx.annotation.Nullable;
+
+import com.futurekang.buildtools.util.Utils;
 
 import java.text.DecimalFormat;
 
@@ -108,11 +111,12 @@ public class ProgressBar extends View {
     private void initParams() {
         pbWidth = getWidth();
         pbHeight = pbWidth;
-        pbRadius = 150;
         rTop = 0;
         rLeft = 0;
-        rRight = 300;
-        rBottom = 300;
+        int screenWidth = Utils.getScreenWidth(getContext());
+        rRight = Utils.dip2px(getContext(), 100);
+        rBottom = rRight;
+        pbRadius = rRight / 2;
     }
 
     /**
@@ -141,7 +145,7 @@ public class ProgressBar extends View {
 
         linePaint.setStyle(Paint.Style.FILL);
         linePaint.setStrokeCap(Paint.Cap.ROUND);
-        linePaint.setStrokeWidth(8f);
+        linePaint.setStrokeWidth(6f);
         linePaint.setAntiAlias(true);
         linePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
         Shader lineShader = new SweepGradient(0, 0, Colors.white, Colors.darkgray);
@@ -164,19 +168,18 @@ public class ProgressBar extends View {
         super.onDraw(canvas);
         initParams();//初始化参数
         //画布移到中间的位置
-        canvas.translate(getWidth() / 2 - 150, getHeight() / 2 - 150);
+        canvas.translate(getWidth() / 2 - pbRadius, getHeight() / 2 - pbRadius);
+        drawRoundRect(canvas);//圆角矩形
+
         switch (style) {
             case LOOP:
-                drawRoundRect(canvas);//圆角矩形
                 drawLine(canvas);//画刻度进度条
                 break;
             case ARC:
-                drawRoundRect(canvas);//圆角矩形
                 drawNormalArc(canvas);//画底部圆环
                 drawColorArc(canvas);//进度条圆环
                 break;
             case ARC_TEXT:
-                drawRoundRect(canvas);//圆角矩形
                 drawNormalArc(canvas);//画底部圆环
                 drawColorArc(canvas);//进度条圆环
                 drawText(canvas);//文字
@@ -258,12 +261,12 @@ public class ProgressBar extends View {
      * @param canvas
      */
     private void drawLine(Canvas canvas) {
-        canvas.rotate(progress, 150, 150);//以圆心为原点旋转  动态
+        canvas.rotate(progress, pbRadius, pbRadius);//以圆心为原点旋转  动态
         float lineRadius = pbRadius / 4;
         for (int i = 360; i >= 0; i--) {
             if (i % 30 == 0) {
-                Float[] mXY = getCircleXY(i, 150, 150, lineRadius + 10);
-                Float[] pXY = getCircleXY(i, 150, 150, lineRadius - 10);
+                Float[] mXY = getCircleXY(i, pbRadius, pbRadius, lineRadius + 10);
+                Float[] pXY = getCircleXY(i, pbRadius, pbRadius, lineRadius - 10);
                 float[] pts = new float[]{mXY[0], mXY[1], pXY[0], pXY[1]};
                 canvas.drawLines(pts, linePaint);
             }
@@ -297,11 +300,13 @@ public class ProgressBar extends View {
      * 开始旋转
      */
     public void start() {
-        if (null == runnable) {
-            loading();
-        }
-        if (style == Style.LOOP && runnable.getState() != Thread.State.RUNNABLE) {
-            runnable.start();
+        if (style == Style.LOOP) {
+            if (null == runnable) {
+                loading();
+            }
+            if (runnable.getState() != Thread.State.RUNNABLE) {
+                runnable.start();
+            }
         }
     }
 

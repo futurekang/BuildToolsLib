@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 
 import com.futurekang.fastbuild.R;
 
-//一个带角的消息气泡
 public class BubbleLayout extends LinearLayout {
     public static final int LEFT = 1;
     public static final int TOP = 2;

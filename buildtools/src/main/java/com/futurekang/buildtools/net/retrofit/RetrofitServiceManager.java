@@ -1,11 +1,13 @@
 package com.futurekang.buildtools.net.retrofit;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,7 +18,7 @@ public class RetrofitServiceManager {
     private Retrofit retrofit;
 
 
-    public RetrofitServiceManager(String baseUrl, Map<Integer, Interceptor> interceptorMap) {
+    public RetrofitServiceManager(String baseUrl, Map<Integer, Interceptor> interceptorMap, List<Converter.Factory> factories) {
         //通过构建器 创建OKHttp客户端
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         //链接超时时间
@@ -32,12 +34,21 @@ public class RetrofitServiceManager {
                 builder.addInterceptor(interceptorMap.get(iterator.next()));
             }
         }
-        retrofit = new Retrofit.Builder()
-                .client(builder.build())
+
+        Retrofit.Builder myRetrofit = new Retrofit.Builder().client(builder.build());
+
+        if (null != factories && factories.size() > 0) {
+            for (Converter.Factory factory : factories) {
+                myRetrofit.addConverterFactory(factory);
+            }
+        }
+        myRetrofit.addConverterFactory(new NullOnEmptyConverterFactory())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(baseUrl)
-                .build();
+                .baseUrl(baseUrl);
+
+
+        retrofit = myRetrofit.build();
     }
 
 
@@ -45,14 +56,19 @@ public class RetrofitServiceManager {
 
     //单例
     public static RetrofitServiceManager getInstance(String baseUrl) {
-        return getInstance(baseUrl, null);
+        return getInstance(baseUrl, null, null);
     }
 
+    //单例
     public static RetrofitServiceManager getInstance(String baseUrl, Map<Integer, Interceptor> interceptorMap) {
+        return getInstance(baseUrl, interceptorMap, null);
+    }
+
+    public static RetrofitServiceManager getInstance(String baseUrl, Map<Integer, Interceptor> interceptorMap, List<Converter.Factory> factories) {
         if (serviceManager == null) {
             synchronized (RetrofitServiceManager.class) {
                 if (serviceManager == null) {
-                    serviceManager = new RetrofitServiceManager(baseUrl, interceptorMap);
+                    serviceManager = new RetrofitServiceManager(baseUrl, interceptorMap, factories);
                 }
             }
         }

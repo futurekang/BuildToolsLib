@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * author : HLQ
- * e-mail : 925954424@qq.com
+ * e-mail : 925954424@module_yudauser_qq.com
  * time   : 2018/01/17
  * desc   : 获取mac 兼容6.0获取 以及4g环境下获取失败
  * version: 1.0

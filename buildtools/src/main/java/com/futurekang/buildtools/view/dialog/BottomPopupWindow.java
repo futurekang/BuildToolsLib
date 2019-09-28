@@ -16,8 +16,8 @@ public abstract class BottomPopupWindow extends BaseDialog {
     public void initDialog(View view) {
         super.initDialog(view);
         //点击屏幕关闭
-        dialog.setCanceledOnTouchOutside(true);
-        Window window = dialog.getWindow();
+        alterDialog.setCanceledOnTouchOutside(true);
+        Window window = alterDialog.getWindow();
         //设置弹出位置
         window.setGravity(Gravity.BOTTOM);
         //设置对话框大小

@@ -19,7 +19,7 @@ public class ExceptionUtils {
         } else if (e instanceof JSONException || e instanceof JsonParseException) {
             error = new NetErrorException(e, NetErrorException.PARSE_ERROR);
         } else if (e instanceof SocketTimeoutException) {
-            error = new NetErrorException(e, NetErrorException.SocketTimeoutError);
+            error = new NetErrorException(e, NetErrorException.SOCKETTIMEOUTERROR);
         } else if (e instanceof ConnectException) {
             error = new NetErrorException(e, NetErrorException.CONNECT_EXCEPTION);
         } else {
@@ -43,7 +43,7 @@ public class ExceptionUtils {
         public static final int NO_CONNECT_ERROR = 1;
 
         /*网络连接超时*/
-        public static final int SocketTimeoutError = 6;
+        public static final int SOCKETTIMEOUTERROR = 6;
         /**
          * 无法连接到服务
          */
@@ -97,10 +97,14 @@ public class ExceptionUtils {
                     return "当前无网络连接";
                 case CONNECT_EXCEPTION:
                     return "无法连接到服务器，请检查网络连接后再试！";
+
+                case SOCKETTIMEOUTERROR:
+                    return "暂时无法连接到服务器，请稍后再试！";
+
                 case HTTP_EXCEPTION:
                     try {
                         if (exception.getMessage().equals("HTTP 500 Internal Server Error")) {
-                            return "服务器发生错误！";
+                            return "服务器发生错误！500";
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

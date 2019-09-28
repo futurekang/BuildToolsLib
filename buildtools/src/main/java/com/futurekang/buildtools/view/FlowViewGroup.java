@@ -4,10 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.RadioGroup;
+import android.widget.LinearLayout;
 
 //自适应ViewGroup
-public class FlowViewGroup extends RadioGroup {
+public class FlowViewGroup extends LinearLayout {
     private static final String TAG = "FlowViewGroup";
 
     public FlowViewGroup(Context context) {

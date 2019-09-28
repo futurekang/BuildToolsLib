@@ -169,7 +169,7 @@ public class CanvasView extends View {
             options -= 10;// 每次都减少10
         }
         ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
-        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片  （PS，这一步操作后，图片质量会变大，没有搞懂为什么，知道的大神可以给我解释下549908016@qq.com）
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片  （PS，这一步操作后，图片质量会变大，没有搞懂为什么，知道的大神可以给我解释下549908016@module_yudauser_qq.com）
         return bitmap;
     }
 

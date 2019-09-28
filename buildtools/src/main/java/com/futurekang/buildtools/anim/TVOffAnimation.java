@@ -44,7 +44,6 @@ public class TVOffAnimation extends Animation {
 
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
-
         final Matrix matrix = t.getMatrix();
         if (interpolatedTime < 0.8) {
             matrix.preScale(1 + 0.625f * interpolatedTime, 1 - interpolatedTime / 0.8f + 0.01f, halfWidth, halfHeight);

@@ -3,11 +3,16 @@ package com.futurekang.buildtools.view.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+
+import com.futurekang.buildtools.anim.TVOffAnimation;
 
 public abstract class BaseDialog {
-    protected Dialog dialog;
+    protected Dialog alterDialog;
     protected Context context;
     protected int layoutId;
     protected View containerView;
@@ -29,14 +34,14 @@ public abstract class BaseDialog {
     protected void initDialog(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view);
-        setChildView(view);
+        alterDialog = builder.create();
         containerView = view;
-        dialog = builder.create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-        dialog.hide();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//        dialog.getWindow().setGravity(Gravity.CENTER);//可以设置显示的位置
+        setChildView(view);
+        alterDialog.setCanceledOnTouchOutside(false);
+        alterDialog.show();
+        alterDialog.hide();
+        alterDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//        alterDialog.getWindow().setGravity(Gravity.CENTER);//可以设置显示的位置
     }
 
     public View findViewById(int layoutId) {
@@ -45,30 +50,33 @@ public abstract class BaseDialog {
 
     protected abstract void setChildView(View v);
 
-    protected boolean setCancelable() {
-        return false;
+    public void setCanceledOnTouchOutside(boolean enabel) {
+        alterDialog.setCanceledOnTouchOutside(enabel);
     }
 
-    ;
+    public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
+        if (alterDialog != null) {
+            alterDialog.setOnDismissListener(onDismissListener);
+        }
+    }
 
     public void show() {
-        if (dialog != null) {
-            dialog.show();
+        if (alterDialog != null) {
+            alterDialog.show();
         }
     }
 
     public void hide() {
-        if (dialog != null) {
-            dialog.dismiss();
+        if (alterDialog != null) {
+            alterDialog.dismiss();
         }
     }
 
     public void dismiss() {
-        if (dialog != null) {
-            if (dialog.isShowing()) {
-                dialog.dismiss();
+        if (alterDialog != null) {
+            if (alterDialog.isShowing()) {
+                alterDialog.dismiss();
             }
         }
     }
-
 }

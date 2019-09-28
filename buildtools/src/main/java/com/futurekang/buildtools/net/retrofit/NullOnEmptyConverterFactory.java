@@ -1,14 +1,19 @@
 package com.futurekang.buildtools.net.retrofit;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.util.Date;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 public class NullOnEmptyConverterFactory extends Converter.Factory {
+    private String TAG = "NullOnEmptyConverterFactory";
 
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {

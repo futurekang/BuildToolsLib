@@ -5,6 +5,7 @@
         <attr name="ios" format="boolean" />
         <attr name="leftSwipe" format="boolean" />
     </declare-styleable>
+
     <declare-styleable name="BubbleLayout">
         <attr name="background_color" format="color" />
         <attr name="shadow_color" format="color" />

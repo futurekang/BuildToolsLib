@@ -14,8 +14,11 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Base64;
+
+import androidx.core.content.FileProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -325,20 +328,19 @@ public class BitmapUtils {
         return target;
     }
 
-    public static void saveBitmap(Bitmap bitmap, String bitName) throws IOException {
-        saveBitmap("/sdcard/DCIM/Camera/", bitmap, bitName);
+    public static void saveBitmap(Bitmap bitmap) throws IOException {
+        saveBitmap("/sdcard/DCIM/Camera/", bitmap);
     }
 
     /**
      * 保存图片
      *
      * @param bitmap
-     * @param bitName
      * @throws IOException
      */
-    public static boolean saveBitmap(String filePath, Bitmap bitmap, String bitName) throws IOException {
+    public static File saveBitmap(String filePath, Bitmap bitmap) throws IOException {
         File file = null;
-        file = new File(filePath + bitName + ".png");
+        file = new File(filePath);
         if (file.exists()) {
             file.delete();
         }
@@ -348,14 +350,14 @@ public class BitmapUtils {
             if (bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)) {
                 out.flush();
                 out.close();
-                return true;
+                return file;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     public static boolean bitmapExists(String bitName) {
@@ -385,5 +387,29 @@ public class BitmapUtils {
         options.inPurgeable = true;
         options.inSampleSize = inSampleSize;
         return options;
+    }
+
+    /**
+     * file路径转uri
+     *
+     * @param path
+     * @return
+     */
+    public static Uri filePathToUri(Context context, String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Uri uri = null;
+        if (Build.VERSION.SDK_INT < 24) {
+            uri = Uri.fromFile(file);
+        } else {
+            uri = FileProvider.getUriForFile(context, context.getApplicationInfo().packageName + ".fileProvider", file);
+        }
+        return uri;
     }
 }
