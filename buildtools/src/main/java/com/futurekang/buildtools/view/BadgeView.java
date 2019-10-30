@@ -23,7 +23,7 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 
 /**
- * A simple text label view that can be applied as a "badge" to any given {@link  }.
+ * A simple text label view that can be applied as a "badge" to any given {@link android.view.View}.
  * This class is intended to be instantiated at runtime rather than included in XML layouts.
  *
  * @author Jeff Gilfelt
@@ -72,7 +72,7 @@ public class BadgeView extends TextView {
     /**
      * Constructor -
      * <p>
-     * create a new BadgeView instance attached to a target
+     * create a new BadgeView instance attached to a target {@link android.view.View}.
      *
      * @param context context for this view.
      * @param target  the View to attach the badge to.
@@ -84,7 +84,7 @@ public class BadgeView extends TextView {
     /**
      * Constructor -
      * <p>
-     * create a new BadgeView instance attached to a target
+     * create a new BadgeView instance attached to a target {@link android.widget.TabWidget}
      * tab at a given index.
      *
      * @param context context for this view.

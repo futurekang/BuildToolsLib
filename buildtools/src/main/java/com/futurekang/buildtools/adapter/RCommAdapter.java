@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.IntDef;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.annotation.Retention;
@@ -37,7 +39,7 @@ public abstract class RCommAdapter<T> extends RecyclerView.Adapter<RCommAdapter.
     /**
      * 条目选中
      */
-    private Boolean seleteEnable = false;
+    private boolean seleteEnable = false;
 
     /**
      * 是否缓存条目（关闭后可以解决包含radiobutton/checkbox时出错的情况）
@@ -63,7 +65,7 @@ public abstract class RCommAdapter<T> extends RecyclerView.Adapter<RCommAdapter.
     public @interface Mode {
     }
 
-    private int mode = MODE_MULTIPLE;
+    private static int mode = MODE_MULTIPLE;
 
 
     // 当前加载状态，默认为加载完成
@@ -82,10 +84,14 @@ public abstract class RCommAdapter<T> extends RecyclerView.Adapter<RCommAdapter.
     }
 
 
-    public RCommAdapter(List<T> dataList, int layoutId) {
+    public RCommAdapter(List<T> dataList, @LayoutRes int layoutId) {
         this.itemlayoutId = layoutId;
         this.dataList = dataList;
         selectedMap = new HashMap<>();
+    }
+
+    public void addLoadMoreListener(@Nullable RecyclerView recyclerView, @Nullable EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener) {
+        recyclerView.addOnScrollListener(endlessRecyclerOnScrollListener);
     }
 
 
@@ -116,13 +122,13 @@ public abstract class RCommAdapter<T> extends RecyclerView.Adapter<RCommAdapter.
             }
         }
 
-        public void setText(String text, int id) {
+        public void setText(String text, @IdRes int id) {
             TextView textView = getItemView(id);
             textView.setText(text);
         }
 
 
-        public void setOnClickListener(int id, View.OnClickListener listener) {
+        public void setOnClickListener(@IdRes int id, @Nullable View.OnClickListener listener) {
             getItemView(id).setOnClickListener(listener);
         }
     }
@@ -155,10 +161,9 @@ public abstract class RCommAdapter<T> extends RecyclerView.Adapter<RCommAdapter.
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setItemSelected(position, !getItemSelectStatus(position));
-                    lastIndex = getSelectIndex();
                     if (onItemClickListener != null) {
-                        onItemClickListener.onItemClick(holder, position);
+                        boolean b = onItemClickListener.onItemClick(holder, position);
+                        setItemSelected(position, b);
                     }
                 }
             });
@@ -221,7 +226,7 @@ public abstract class RCommAdapter<T> extends RecyclerView.Adapter<RCommAdapter.
      *
      * @param headerViewId
      */
-    public void setHeaderViewId(int headerViewId) {
+    public void setHeaderViewId(@LayoutRes int headerViewId) {
         this.headerViewId = headerViewId;
     }
 
@@ -231,19 +236,14 @@ public abstract class RCommAdapter<T> extends RecyclerView.Adapter<RCommAdapter.
      */
     public void setItemSelected(int position, boolean select) {
         if (mode == MODE_RADIO) {
-            Iterator<Integer> iterator = this.selectedMap.keySet().iterator();
-            if (select) {
-                while (iterator.hasNext()) {
-                    int temp = iterator.next();
-                    if (this.selectedMap.get(temp)) {
-                        this.selectedMap.put(temp, false);
-                        notifyItemChanged(temp);
-                    }
-                }
-                this.selectedMap.put(position, true);
-                this.selectedMap.put(getLastSelectedIndex(), false);
-                notifyItemChanged(position);
+            this.selectedMap.put(position, select);
+            notifyItemChanged(position);
+            //最后一次选中的如果和当前的相同，那么不改变原来的状态
+            if (lastIndex != -1 && lastIndex != position) {
+                this.selectedMap.put(lastIndex, false);
+                notifyItemChanged(lastIndex);
             }
+            lastIndex = position;
         } else if (mode == MODE_MULTIPLE) {
             this.selectedMap.put(position, select);
             notifyItemChanged(position);
@@ -255,7 +255,7 @@ public abstract class RCommAdapter<T> extends RecyclerView.Adapter<RCommAdapter.
      *
      * @return
      */
-    public Integer getSelectIndex() {
+    public Integer getSelectedIndex() {
         if (mode == MODE_RADIO) {
             Iterator<Integer> iterator = this.selectedMap.keySet().iterator();
             while (iterator.hasNext()) {
@@ -313,7 +313,7 @@ public abstract class RCommAdapter<T> extends RecyclerView.Adapter<RCommAdapter.
     OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
-        public void onItemClick(RCViewHolder viewHolder, int position);
+        public boolean onItemClick(RCViewHolder viewHolder, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -337,7 +337,7 @@ public abstract class RCommAdapter<T> extends RecyclerView.Adapter<RCommAdapter.
         }
     }
 
-    public void setFooterViewId(int footerViewId) {
+    public void setFooterViewId(@LayoutRes int footerViewId) {
         this.footerViewId = footerViewId;
     }
 

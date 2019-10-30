@@ -3,13 +3,8 @@ package com.futurekang.buildtools.view.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-
-import com.futurekang.buildtools.anim.TVOffAnimation;
 
 public abstract class BaseDialog {
     protected Dialog alterDialog;
@@ -44,20 +39,15 @@ public abstract class BaseDialog {
 //        alterDialog.getWindow().setGravity(Gravity.CENTER);//可以设置显示的位置
     }
 
+
     public View findViewById(int layoutId) {
         return containerView.findViewById(layoutId);
     }
 
     protected abstract void setChildView(View v);
 
-    public void setCanceledOnTouchOutside(boolean enabel) {
-        alterDialog.setCanceledOnTouchOutside(enabel);
-    }
-
-    public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
-        if (alterDialog != null) {
-            alterDialog.setOnDismissListener(onDismissListener);
-        }
+    public void setCanceledOnTouchOutside(boolean enable) {
+        alterDialog.setCanceledOnTouchOutside(enable);
     }
 
     public void show() {
@@ -79,4 +69,5 @@ public abstract class BaseDialog {
             }
         }
     }
+
 }

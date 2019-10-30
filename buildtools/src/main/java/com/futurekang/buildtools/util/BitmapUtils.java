@@ -88,7 +88,7 @@ public class BitmapUtils {
     public static File getFileFromMediaUri(Context ac, Uri uri) {
         if (uri.getScheme().toString().compareTo("content") == 0) {
             ContentResolver cr = ac.getContentResolver();
-            Cursor cursor = cr.query(uri, null, null, null, null);// ����Uri�����ݿ�����
+            Cursor cursor = cr.query(uri, null, null, null, null);
             if (cursor != null) {
                 cursor.moveToFirst();
                 String filePath = cursor.getString(cursor
