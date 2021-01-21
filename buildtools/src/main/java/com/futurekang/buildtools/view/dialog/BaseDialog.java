@@ -33,8 +33,7 @@ public abstract class BaseDialog {
         containerView = view;
         setChildView(view);
         alterDialog.setCanceledOnTouchOutside(false);
-        alterDialog.show();
-        alterDialog.hide();
+        alterDialog.create();
         alterDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 //        alterDialog.getWindow().setGravity(Gravity.CENTER);//可以设置显示的位置
     }
