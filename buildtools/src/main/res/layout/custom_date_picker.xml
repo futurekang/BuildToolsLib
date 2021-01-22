@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="65dp"
+                android:layout_marginRight="20dp"
+                android:background="#A9A9A9" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <com.futurekang.buildtools.view.datepicker.DatePickerView
+                    android:id="@+id/year_pv"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="年"
+                    android:textSize="18sp" />
+
+                <com.futurekang.buildtools.view.datepicker.DatePickerView
+                    android:id="@+id/month_pv"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="月"
+                    android:textSize="18sp" />
+
+                <com.futurekang.buildtools.view.datepicker.DatePickerView
+                    android:id="@+id/day_pv"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:id="@+id/day_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="日"
+                    android:textSize="18sp" />
+
+                <com.futurekang.buildtools.view.datepicker.DatePickerView
+                    android:id="@+id/hour_pv"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:id="@+id/hour_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="时"
+                    android:textSize="18sp" />
+
+                <com.futurekang.buildtools.view.datepicker.DatePickerView
+                    android:id="@+id/minute_pv"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:id="@+id/minute_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="分"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="95dp"
+                android:layout_marginRight="20dp"
+                android:background="#A9A9A9" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#A9A9A9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="取消"
+            android:textColor="#808080"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="45dp"
+            android:background="#A9A9A9" />
+
+        <Button
+            android:id="@+id/btn_select"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="确定"
+            android:textColor="#808080"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
